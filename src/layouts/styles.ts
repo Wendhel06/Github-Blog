@@ -1,5 +1,3 @@
 import styled from 'styled-components'
 
-export const DefaultLayoutContainer = styled.div`
-  background-color: purple;
-`
+export const DefaultLayoutContainer = styled.div``
