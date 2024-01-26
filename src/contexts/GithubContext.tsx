@@ -11,8 +11,16 @@ interface GitHubUser {
   html_url: string
 }
 
+interface GitHubIssues {
+  title: string
+  body: string
+  created_at: string
+  id: number
+}
+
 interface GithubType {
   gitHubUser: GitHubUser
+  githubIssues: GitHubIssues[]
 }
 
 interface GithubContextProviderProps {
@@ -23,19 +31,28 @@ export const GithubContext = createContext({} as GithubType)
 export function GithubContextProvider({
   children,
 }: GithubContextProviderProps) {
-  const [gitHubUser, setGithubData] = useState({} as GitHubUser)
+  const [gitHubUser, setGithubUserData] = useState({} as GitHubUser)
+  const [githubIssues, setGithubIssues] = useState<GitHubIssues[]>([])
 
-  async function getGitHubApi() {
+  async function getGitHubUserApi() {
     const response = await api.get('/users/Wendhel06')
-    return setGithubData(response.data)
+    return setGithubUserData(response.data)
+  }
+
+  async function getGitHubIssues() {
+    const response = await api.get(
+      'search/issues?q=repo:Wendhel06/Github-Blog/',
+    )
+    return setGithubIssues(response.data.items)
   }
 
   useEffect(() => {
-    getGitHubApi()
+    getGitHubUserApi()
+    getGitHubIssues()
   }, [])
 
   return (
-    <GithubContext.Provider value={{ gitHubUser }}>
+    <GithubContext.Provider value={{ gitHubUser, githubIssues }}>
       {children}
     </GithubContext.Provider>
   )

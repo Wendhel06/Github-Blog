@@ -14,9 +14,12 @@ import CompanyIcon from '../../assets/Icon (1).svg'
 import FollowersIcon from '../../assets/Icon (2).svg'
 import { useContext } from 'react'
 import { GithubContext } from '../../contexts/GithubContext'
+import { SearchForm } from './components/SearchForm'
+import { formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
 
 export function Blog() {
-  const { gitHubUser } = useContext(GithubContext)
+  const { gitHubUser, githubIssues } = useContext(GithubContext)
 
   return (
     <BlogContainer>
@@ -60,77 +63,25 @@ export function Blog() {
           <p>Publicações</p>
           <span>6 publicações</span>
         </div>
-        <input type="text" placeholder="Buscar conteúdo" />
+        <SearchForm />
       </InputContainer>
       <GridContainerPosts>
-        <Posts>
-          <div>
-            <h3>JavaScript data types and data structures</h3>
-            <span>Há 1 dia</span>
-          </div>
-          <p>
-            Programming languages all have built-in data structures, but these
-            often differ from one language to another. This article attempts to
-            list the built-in data structures available in JavaScript and what
-            properties they have. These can be used to build other data
-            structures. Wherever possible, comparisons with other languages are
-            drawn. Dynamic typing JavaScript is a loosely typed and dynamic
-            language. Variables in JavaScript are not directly associated with
-            any particular value type, and any variable can be assigned a
-            boolean
-          </p>
-        </Posts>
-        <Posts>
-          <div>
-            <h3>JavaScript data types and data structures</h3>
-            <span>Há 1 dia</span>
-          </div>
-          <p>
-            Programming languages all have built-in data structures, but these
-            often differ from one language to another. This article attempts to
-            list the built-in data structures available in JavaScript and what
-            properties they have. These can be used to build other data
-            structures. Wherever possible, comparisons with other languages are
-            drawn. Dynamic typing JavaScript is a loosely typed and dynamic
-            language. Variables in JavaScript are not directly associated with
-            any particular value type, and any variable can be assigned a
-            boolean
-          </p>
-        </Posts>
-        <Posts>
-          <div>
-            <h3>JavaScript data types and data structures</h3>
-            <span>Há 1 dia</span>
-          </div>
-          <p>
-            Programming languages all have built-in data structures, but these
-            often differ from one language to another. This article attempts to
-            list the built-in data structures available in JavaScript and what
-            properties they have. These can be used to build other data
-            structures. Wherever possible, comparisons with other languages are
-            drawn. Dynamic typing JavaScript is a loosely typed and dynamic
-            language. Variables in JavaScript are not directly associated with
-            any particular value type, and any variable can be assigned a
-            boolean
-          </p>
-        </Posts>{' '}
-        <Posts>
-          <div>
-            <h3>JavaScript data types and data structures</h3>
-            <span>Há 1 dia</span>
-          </div>
-          <p>
-            Programming languages all have built-in data structures, but these
-            often differ from one language to another. This article attempts to
-            list the built-in data structures available in JavaScript and what
-            properties they have. These can be used to build other data
-            structures. Wherever possible, comparisons with other languages are
-            drawn. Dynamic typing JavaScript is a loosely typed and dynamic
-            language. Variables in JavaScript are not directly associated with
-            any particular value type, and any variable can be assigned a
-            boolean
-          </p>
-        </Posts>
+        {githubIssues.map((issues) => {
+          return (
+            <Posts key={issues.id}>
+              <div>
+                <h3>{issues.title}</h3>
+                <p>
+                  {formatDistanceToNow(issues.created_at, {
+                    addSuffix: true,
+                    locale: ptBR,
+                  })}
+                </p>
+              </div>
+              <p>{issues.body}</p>
+            </Posts>
+          )
+        })}
       </GridContainerPosts>
     </BlogContainer>
   )
