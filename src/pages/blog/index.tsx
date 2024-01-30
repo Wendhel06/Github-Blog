@@ -1,7 +1,6 @@
 import {
   BlogContainer,
   GridContainerPosts,
-  InputContainer,
   IntroProfileContainer,
   IntroProfileText,
   Posts,
@@ -14,9 +13,9 @@ import CompanyIcon from '../../assets/Icon (1).svg'
 import FollowersIcon from '../../assets/Icon (2).svg'
 import { useContext } from 'react'
 import { GithubContext } from '../../contexts/GithubContext'
-import { SearchForm } from './components/SearchForm'
 import { formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
+import { SearchForm } from './components/SearchForm'
 
 export function Blog() {
   const { gitHubUser, githubIssues } = useContext(GithubContext)
@@ -58,13 +57,7 @@ export function Blog() {
           </IntroProfileText>
         </div>
       </IntroProfileContainer>
-      <InputContainer>
-        <div>
-          <p>Publicações</p>
-          <span>6 publicações</span>
-        </div>
-        <SearchForm />
-      </InputContainer>
+      <SearchForm />
       <GridContainerPosts>
         {githubIssues.map((issues) => {
           return (

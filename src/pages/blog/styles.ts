@@ -50,24 +50,6 @@ export const SocialMediaContainer = styled.div`
     gap: 8px;
   }
 `
-export const InputContainer = styled.div`
-  & > div {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-
-    p {
-      color: ${(props) => props.theme['base-subtitle']};
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    span {
-      color: ${(props) => props.theme['base-span']};
-      font-size: 14px;
-    }
-  }
-`
 export const GridContainerPosts = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -79,9 +61,12 @@ export const Posts = styled.div`
   background-color: ${(props) => props.theme['base-post']};
   padding: 32px;
   border-radius: 10px;
+  cursor: pointer;
 
   & > div {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     gap: 16px;
     margin-bottom: 20px;
 
@@ -93,9 +78,9 @@ export const Posts = styled.div`
       max-width: 265px;
     }
 
-    span {
+    p {
       color: ${(props) => props.theme['base-span']};
-      font-size: 14px;
+      font-size: 13px;
       margin-top: 5px;
     }
   }

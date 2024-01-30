@@ -16,11 +16,13 @@ interface GitHubIssues {
   body: string
   created_at: string
   id: number
+  postsLength: number
 }
 
 interface GithubType {
   gitHubUser: GitHubUser
   githubIssues: GitHubIssues[]
+  getGitHubIssues: (query: string) => Promise<void>
 }
 
 interface GithubContextProviderProps {
@@ -39,9 +41,9 @@ export function GithubContextProvider({
     return setGithubUserData(response.data)
   }
 
-  async function getGitHubIssues() {
+  async function getGitHubIssues(query: string = '') {
     const response = await api.get(
-      'search/issues?q=repo:Wendhel06/Github-Blog/',
+      `search/issues?q=repo:Wendhel06/Github-Blog%20${query}`,
     )
     return setGithubIssues(response.data.items)
   }
@@ -52,7 +54,9 @@ export function GithubContextProvider({
   }, [])
 
   return (
-    <GithubContext.Provider value={{ gitHubUser, githubIssues }}>
+    <GithubContext.Provider
+      value={{ gitHubUser, githubIssues, getGitHubIssues }}
+    >
       {children}
     </GithubContext.Provider>
   )

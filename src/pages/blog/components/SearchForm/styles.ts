@@ -1,5 +1,24 @@
 import styled from 'styled-components'
 
+export const InputContainer = styled.div`
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    p {
+      color: ${(props) => props.theme['base-subtitle']};
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    span {
+      color: ${(props) => props.theme['base-span']};
+      font-size: 14px;
+    }
+  }
+`
+
 export const SearchContainer = styled.form`
   & input[type='text'] {
     width: 100%;
