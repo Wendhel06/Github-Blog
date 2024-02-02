@@ -10,6 +10,10 @@ export const IntroProfileContainer = styled.div`
   background: ${(props) => props.theme['base-profile']};
   margin-bottom: 72px;
 
+  @media (max-width: 590px) {
+    padding: 32px 15px 32px;
+  }
+
   & > div {
     display: flex;
     width: 100%;
@@ -50,6 +54,10 @@ export const SocialMediaContainer = styled.div`
   gap: 24px;
   margin-top: 24px;
 
+  @media (max-width: 590px) {
+    flex-direction: column;
+  }
+
   & > div {
     display: flex;
     align-items: center;
@@ -61,6 +69,10 @@ export const GridContainerPosts = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 32px;
   margin-top: 48px;
+
+  @media (max-width: 590px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 
   & > a {
     display: block;
