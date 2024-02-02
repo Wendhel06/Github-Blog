@@ -11,7 +11,7 @@ main {
   width: 100%;
   max-width: 864px;
   margin: -80px auto 0px;
-  padding: 0px 0px 75px;
+  padding: 0px 20px 75px;
 }
 
 body {

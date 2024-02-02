@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { SocialMediaContainer } from '../blog/styles'
 import {
   ContentPostContainer,
@@ -11,8 +11,30 @@ import GithubLinkIcon from '../../assets/Icon (3).svg'
 import GithubIcon from '../../assets/Icon.svg'
 import Calendar from '../../assets/calendar.png'
 import Comments from '../../assets/Icon (5).svg'
+import { api } from '../../lib/axios'
+import { useContext, useEffect, useState } from 'react'
+import { GitHubIssues, GithubContext } from '../../contexts/GithubContext'
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale/pt-BR'
+import Markdown from 'react-markdown'
 
 export function Post() {
+  const { gitHubUser } = useContext(GithubContext)
+  const [issuesFull, setIssuesFull] = useState({} as GitHubIssues)
+  const { id } = useParams()
+
+  function componentMarkdown() {
+    return <Markdown>{issuesFull.body}</Markdown>
+  }
+
+  useEffect(() => {
+    async function getIssue() {
+      const response = await api.get(`repos/Wendhel06/Github-Blog/issues/${id}`)
+      return setIssuesFull(response.data)
+    }
+    getIssue()
+  }, [id])
+
   return (
     <PostContainer>
       <IntroProfilePostContainer>
@@ -21,39 +43,39 @@ export function Post() {
             <img src={Setinha} alt="" />
             Voltar
           </NavLink>
-          <NavLink to="/https://www.github.com" target="_blank">
+          <NavLink
+            to={`https://github.com/${issuesFull.html_url}`}
+            target="_blank"
+          >
             ver no github
             <img src={GithubLinkIcon} alt="logotipo github" />
           </NavLink>
         </PostLinkContainer>
-        <h2>JavaScript data types and data structures</h2>
+        <h2>{issuesFull.title}</h2>
         <SocialMediaContainer>
           <div>
             <img src={GithubIcon} alt="github icon" />
-            <p>cameronwll</p>
+            <p>{gitHubUser.login}</p>
           </div>
           <div>
             <img src={Calendar} alt="Calendar icon" />
-            <p>Há 1 dia</p>
+            <time>
+              {issuesFull.created_at
+                ? formatDistanceToNow(issuesFull.created_at, {
+                    addSuffix: true,
+                    locale: ptBR,
+                  })
+                : ''}
+            </time>
           </div>
           <div>
             <img src={Comments} alt="Comments icon" />
-            <p>5 comentários</p>
+            <p>{issuesFull.comments}</p>
           </div>
         </SocialMediaContainer>
       </IntroProfilePostContainer>
       <ContentPostContainer>
-        <p>
-          Programming languages all have built-in data structures, but these
-          often differ from one language to another. This article attempts to
-          list the built-in data structures available in JavaScript and what
-          properties they have. These can be used to build other data
-          structures. Wherever possible, comparisons with other languages are
-          drawn. Dynamic typing JavaScript is a loosely typed and dynamic
-          language. Variables in JavaScript are not directly associated with any
-          particular value type, and any variable can be assigned and
-          re-assigned values of all types.
-        </p>
+        <p>{componentMarkdown()}</p>
       </ContentPostContainer>
     </PostContainer>
   )

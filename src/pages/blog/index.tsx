@@ -3,7 +3,6 @@ import {
   GridContainerPosts,
   IntroProfileContainer,
   IntroProfileText,
-  Posts,
   ProfileImageContainer,
   SocialMediaContainer,
 } from './styles'
@@ -14,8 +13,9 @@ import FollowersIcon from '../../assets/Icon (2).svg'
 import { useContext } from 'react'
 import { GithubContext } from '../../contexts/GithubContext'
 import { formatDistanceToNow } from 'date-fns'
-import ptBR from 'date-fns/locale/pt-BR'
+import { ptBR } from 'date-fns/locale/pt-BR'
 import { SearchForm } from './components/SearchForm'
+import { NavLink } from 'react-router-dom'
 
 export function Blog() {
   const { gitHubUser, githubIssues } = useContext(GithubContext)
@@ -61,7 +61,7 @@ export function Blog() {
       <GridContainerPosts>
         {githubIssues.map((issues) => {
           return (
-            <Posts key={issues.id}>
+            <NavLink key={issues.id} to={`/post/${issues.number}`}>
               <div>
                 <h3>{issues.title}</h3>
                 <p>
@@ -72,7 +72,7 @@ export function Blog() {
                 </p>
               </div>
               <p>{issues.body}</p>
-            </Posts>
+            </NavLink>
           )
         })}
       </GridContainerPosts>

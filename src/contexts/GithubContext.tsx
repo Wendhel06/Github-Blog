@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { api } from '../lib/axios'
 
-interface GitHubUser {
+export interface GitHubUser {
   avatar_url: string
   bio: string
   name: string
@@ -11,12 +11,15 @@ interface GitHubUser {
   html_url: string
 }
 
-interface GitHubIssues {
+export interface GitHubIssues {
   title: string
   body: string
   created_at: string
   id: number
   postsLength: number
+  number: number
+  comments: string
+  html_url: string
 }
 
 interface GithubType {
@@ -47,7 +50,6 @@ export function GithubContextProvider({
     )
     return setGithubIssues(response.data.items)
   }
-
   useEffect(() => {
     getGitHubUserApi()
     getGitHubIssues()

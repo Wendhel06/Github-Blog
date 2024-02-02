@@ -15,6 +15,12 @@ export const IntroProfileContainer = styled.div`
     width: 100%;
     align-items: center;
     gap: 32px;
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
   }
 `
 
@@ -55,39 +61,47 @@ export const GridContainerPosts = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 32px;
   margin-top: 48px;
-`
 
-export const Posts = styled.div`
-  background-color: ${(props) => props.theme['base-post']};
-  padding: 32px;
-  border-radius: 10px;
-  cursor: pointer;
+  & > a {
+    display: block;
+    padding: 2rem;
+    background-color: ${(props) => props.theme['base-post']};
+    border-radius: 10px;
+    border: 1px solid transparent;
 
-  & > div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 20px;
+    & > div {
+      display: flex;
+      justify-content: space-between;
 
-    h3 {
-      font-size: 20px;
-      line-height: 160%;
-      font-weight: 700;
-      color: ${(props) => props.theme['base-title']};
-      max-width: 265px;
+      & > h3 {
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 160%;
+        color: ${(props) => props.theme['base-title']};
+        margin-bottom: 1rem;
+        width: calc(100% - 100px);
+      }
+
+      & > p {
+        font-size: 9px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 160%;
+        color: ${(props) => props.theme['base-span']};
+      }
     }
 
-    p {
-      color: ${(props) => props.theme['base-span']};
-      font-size: 13px;
-      margin-top: 5px;
+    & > p {
+      color: ${(props) => props.theme['base-text']};
+      font-weight: 400;
+      line-height: 160%;
+      text-transform: capitalize;
+      font-size: 1rem;
     }
   }
 
-  & > p {
-    height: 132px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  & > a:hover {
+    border-color: #fff;
   }
 `
